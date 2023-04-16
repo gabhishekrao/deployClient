@@ -7,7 +7,10 @@ import hotelsRoute from "./routes/hotels.js";
 import roomsRoute from "./routes/rooms.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-const path = require("path");
+import  path  from "path";import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 8800
 
 
@@ -42,7 +45,7 @@ app.use("/api/rooms", roomsRoute);
 
 app.use(express.static(path.join(__dirname, "./client/build")));
 
-app.get("*", function (req, res) {
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
