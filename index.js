@@ -7,7 +7,9 @@ import hotelsRoute from "./routes/hotels.js";
 import roomsRoute from "./routes/rooms.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { path } from "path";
 const PORT = process.env.PORT || 8800
+
 
 const app = express();
 dotenv.config();
@@ -35,6 +37,14 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
 app.use("/api/hotels", hotelsRoute);
 app.use("/api/rooms", roomsRoute);
+
+// static files
+
+app.use(express.static(path.join(__dirname, "./client/build")));
+
+app.get("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
